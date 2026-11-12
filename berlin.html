@@ -71,6 +71,8 @@ main{padding-block:clamp(34px,5vw,56px) clamp(52px,7vw,90px);display:grid;gap:cl
 .card b{display:block;font-weight:700;letter-spacing:-.015em;font-size:1.04rem;margin-bottom:4px}
 .card p{color:var(--ink2);font-size:.94rem;line-height:1.5}
 footer{background:var(--deep);text-align:center;padding-block:36px calc(36px + env(safe-area-inset-bottom,0px))}
+@media (max-width:520px){.hotel .foot{flex-direction:column;align-items:stretch;gap:14px}.cta{justify-content:center;padding-block:12px}.top{flex-wrap:nowrap}.back{padding:8px 12px;font-size:.8rem;white-space:nowrap}.lang button{padding:6px 9px}}
+@media (max-width:350px){.top{flex-wrap:wrap}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hotel,.card{transition:none}}
 </style></head><body>
 <header><div class="wrap">
