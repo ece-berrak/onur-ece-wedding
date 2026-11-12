@@ -24,8 +24,8 @@ h1,h2{font-family:var(--display);font-stretch:112%;letter-spacing:-.035em;text-t
 img{display:block}
 
 /* ---------- hero film: a flight over a pale map of Berlin, TV tower to the terrace ---------- */
-.track{height:460svh;position:relative}
-.stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--stone)}
+.track{height:460svh;position:relative;background:#16265f}
+.stage{position:sticky;top:0;height:100svh;height:100dvh;overflow:hidden;background:var(--stone)}
 .sky{position:absolute;inset:0;overflow:hidden}
 .plane{position:absolute;left:50%;top:64%;width:0;height:0;transform-style:preserve-3d;transform-origin:0 0}
 .map{position:absolute;left:-800px;top:-700px;width:3200px;height:2700px;max-width:none;overflow:visible}
@@ -225,12 +225,12 @@ section{padding-block:clamp(72px,11vw,140px)}
 
 /* evening: day photo turns to dusk behind the programme */
 .eve{position:relative;padding:0;background:var(--black);color:var(--white)}
-.eve-bg{position:sticky;top:0;height:100svh;overflow:hidden}
+.eve-bg{position:sticky;top:0;height:100svh;height:100lvh;overflow:hidden}
 .eve-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(calc(1.12 - var(--q,0) * .1))}
 .eve-bg .night{opacity:var(--n,0)}
 .eve-bg img{filter:saturate(.3)}
 .eve-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,38,95,.74),rgba(14,24,66,.8))}
-.eve-in{position:relative;z-index:1;margin-top:-100svh;padding-block:clamp(90px,16vw,200px)}
+.eve-in{position:relative;z-index:1;margin-top:-100svh;margin-top:-100lvh;padding-block:clamp(90px,16vw,200px)}
 .eve .head .label{color:var(--champagne)}
 .prog{list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.5)}
 .prog li{display:grid;grid-template-columns:170px 1fr auto;gap:20px;align-items:baseline;padding:clamp(26px,5vw,54px) 0;border-bottom:1px solid rgba(255,255,255,.25)}
@@ -946,6 +946,9 @@ function clips(){
   $("rush").style.opacity=sw*.9; $("rush").style.transform="scale("+(1+w*.8)+") rotate("+(w*6)+"deg)";
   $("dir").style.opacity=clamp(sw*1.6); $("dir").querySelector("i").style.transform="scaleX("+(.2+.8*w)+")";
 }
+// phones do not load a paused video on their own: start and stop each clip once so its frames are there to scrub
+function prime(){ V.forEach(v=>{ const e=v.el; if(v.ok||v.pr) return; v.pr=true; try{ const q=e.play(); if(q&&q.then) q.then(()=>{e.pause(); v.ok=true; kick();}).catch(()=>{v.pr=false; try{e.load()}catch(_){}}); }catch(_){v.pr=false} }); }
+prime(); ["touchstart","pointerdown","click","scroll"].forEach(n=>addEventListener(n,prime,{passive:true,capture:true}));
 V.forEach(v=>{ const on=()=>{v.ok=true; kick();}; v.el.addEventListener("loadeddata",on); v.el.addEventListener("seeked",on); if(v.el.readyState>=2) v.ok=true; });
 function loop(){
   raf=0; if(!G){ clips(); if(Math.abs(pv-pS)>.0004){ raf=requestAnimationFrame(loop); } return; }
