@@ -304,6 +304,7 @@ form.no .yo{display:none}
 .sendbox pre{width:100%;max-width:520px;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:.9rem;line-height:1.5;background:var(--ivory);border:1px solid var(--champagne);border-radius:14px;padding:14px 16px;margin:0;user-select:all}
 .player{position:fixed;z-index:40;top:calc(12px + env(safe-area-inset-top,0px));left:12px;width:48px;height:48px;max-width:calc(100vw - 24px);border-radius:24px;background:#0d1640;color:#fff;display:flex;align-items:center;gap:10px;padding:4px;overflow:hidden;box-shadow:0 8px 26px rgba(8,14,44,.4);transition:width .45s cubic-bezier(.3,1.2,.4,1)}
 .player.open{width:290px}
+@media (max-width:560px){.player.open{width:min(290px,calc(100vw - 160px))}}
 .pc{flex:none;width:40px;height:40px;border-radius:50%;border:0;padding:0;position:relative;overflow:hidden;cursor:pointer;background:#27468f}
 .pc img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%}
 .player.on .pc img{animation:spin 7s linear infinite}
@@ -1076,9 +1077,9 @@ if(window.__player){ pl.classList.add("open"); if(window.__player>1) pl.classLis
 (function(){ if(window.__p!==undefined&&!window.__welcome) return;
   const sh=$("shint"), hint=()=>{ if(scrollY<40) sh.hidden=false; };
   addEventListener("scroll",()=>{ if(scrollY>40) sh.classList.add("off"); },{passive:true});
-  let seen=false; try{seen=localStorage.getItem("welcomed")==="1"}catch(e){} if(seen&&!window.__welcome){ hint(); return; }
+  let seen=false; try{seen=sessionStorage.getItem("welcomed")==="1"}catch(e){} if(seen&&!window.__welcome){ hint(); return; }
   const w=$("welcome"); w.hidden=false; document.documentElement.style.overflow="hidden";
-  const close=()=>{ w.hidden=true; document.documentElement.style.overflow=""; try{localStorage.setItem("welcomed","1")}catch(e){} hint(); };
+  const close=()=>{ w.hidden=true; document.documentElement.style.overflow=""; try{sessionStorage.setItem("welcomed","1")}catch(e){} hint(); };
   w.querySelectorAll("[data-wl]").forEach(b=>b.addEventListener("click",()=>{ lang=b.dataset.wl; try{localStorage.setItem("lang",lang)}catch(e){} apply(); plPlay();
     $("w1").hidden=true; $("w2").hidden=false; $("wB").focus(); }));
   $("wB").addEventListener("click",close);
